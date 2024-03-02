@@ -1,9 +1,14 @@
 <?php
 
-if (!isset($_SESSION['data'])) {
-  $_SESSION['data'] = [];
-}
 
+
+//if (!isset($_SESSION['data'])) {
+//  $_SESSION['data'] = [];
+//}
+
+$audio = '';
+$vedio = '';
+$name = '';
 
 if (isset($_POST['frist']) && isset($_POST['last']) && isset($_POST['email']) && isset($_POST['password']) && isset($_POST['texts']))
 
@@ -63,17 +68,50 @@ if (isset($_POST['frist']) && isset($_POST['last']) && isset($_POST['email']) &&
 
         if (in_array($type, $types)) {
           move_uploaded_file($file['tmp_name'], $name);
-          $_SESSION['data'][] = [
-            'frist' => $_POST['frist'],
-            'last' => $_POST['last'],
-            'email' => $_POST['email'],
-            'password' => $_POST['password'],
-            'texts' => $_POST['texts'],
-            'rasm' => $name,
-            'vedio' => $vedio,
-            'audio' => $audio
-          ];
-          header('Location:index.php');
+//          $_SESSION['data'][] = [
+//            'frist' => $_POST['frist'],
+//            'last' => $_POST['last'],
+//            'email' => $_POST['email'],
+//            'password' => $_POST['password'],
+//            'texts' => $_POST['texts'],
+//            'rasm' => $name,
+//            'vedio' => $vedio,
+//            'audio' => $audio
+//          ];
+
+            $first = $_POST['frist'];
+            $last = $_POST['last'];
+            $email = $_POST['email'];
+            $province = $_POST['password'];
+            $decs = $_POST['texts'];
+
+          // SQL
+
+
+            $hostName = "localhost";
+            $userName = "root";
+            $password = "";
+            $dbName = "php_4";
+
+            $conn = new mysqli($hostName,$userName,$password,$dbName);
+
+            if($conn){
+                //    echo "connected";
+            }else{
+                echo "not connected";
+            }
+
+
+            $sql = "INSERT INTO `users`( `first_name`, `last_name`, `counter`, `province`, `description`, `image`, `audio`, `video`) VALUES ('$first' ,'$last', '$email','$province', '$decs','$name','$audio','$vedio' )";
+
+            if ($conn->query($sql) === TRUE) {
+                echo "New record created successfully";
+            } else {
+                echo "Error: " . $sql . "<br>" . $conn->error;
+            }
+
+//          header('Location:index.php');
+
         }
       } else {
         echo 'Rasm formati notogri: ' . $type;

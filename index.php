@@ -10,8 +10,9 @@
 </head>
 
 <body>
+
     <?php
-    session_start()
+        include('./connect.php');
     ?>
 
     <div class="controller controllerBox">
@@ -34,7 +35,7 @@
 
             </tr>
         </thead>
-        <?php include('./table.php') ?>
+<!--        --><?php //include('./table.php') ?>
 
        
     </table>
